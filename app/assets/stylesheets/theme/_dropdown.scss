@@ -1,0 +1,111 @@
+//
+// dropdown.scss
+// Extended from Bootstrap
+//
+
+.dropdown-menu {
+  padding-right: var(--#{$prefix}dropdown-padding-x);
+  padding-left: var(--#{$prefix}dropdown-padding-x);
+}
+
+
+// Item
+
+.dropdown-item {
+  width: auto;
+  min-width: 100%;
+  margin-left: calc(#{$dropdown-padding-x} * -1);
+  margin-right: calc(#{$dropdown-padding-x} * -1);
+
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+
+.dropdown-menu > li + li,
+.dropdown-item + .dropdown-item {
+  margin-top: $dropdown-item-spacing-y;
+}
+
+
+// Link (optional)
+
+.dropdown-link {
+  color: inherit;
+
+  &:hover {
+    text-decoration: inherit;
+  }
+
+  &:hover, &:focus {
+    outline: none;
+  }
+}
+
+
+// Header
+
+.dropdown-header {
+  margin-left: calc(#{$dropdown-padding-x} * -1);
+  margin-right: calc(#{$dropdown-padding-x} * -1);
+  padding: 0 var(--#{$prefix}dropdown-item-padding-x) $headings-margin-bottom;
+  font-size: $h6-font-size;
+  font-weight: $font-weight-bold;
+  line-height: $h6-line-height;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+
+// Toggle
+
+.dropdown-toggle::after {
+  font-family: "Feather";
+  vertical-align: middle;
+  border: none !important;
+  content: "\e92e";
+}
+
+.dropend > .dropdown-toggle::after {
+  content: "\e930";
+}
+
+
+// Sizing
+
+.dropdown-menu-xs {
+  --#{$prefix}dropdown-min-width: #{$dropdown-min-width-xs};
+  --#{prefix}dropdown-padding-y: #{$dropdown-padding-y-xs};
+  --#{prefix}dropdown-padding-x: #{$dropdown-padding-x-xs};
+}
+
+.dropdown-menu-md {
+  --#{$prefix}dropdown-min-width: #{$dropdown-min-width-md};
+}
+
+.dropdown-menu-lg {
+  --#{$prefix}dropdown-min-width: #{$dropdown-min-width-lg};
+  --#{$prefix}dropdown-padding-y: #{$dropdown-padding-y-lg};
+  --#{$prefix}dropdown-padding-x: #{$dropdown-padding-x-lg};
+  --#{$prefix}dropdown-item-padding-x: #{$dropdown-item-padding-x-lg};
+}
+
+.dropdown-menu-xl {
+  --#{$prefix}dropdown-min-width: #{$dropdown-min-width-xl};
+  --#{$prefix}dropdown-padding-y: #{$dropdown-padding-y-lg};
+  --#{$prefix}dropdown-padding-x: #{$dropdown-padding-x-lg};
+  --#{$prefix}dropdown-item-padding-x: #{$dropdown-item-padding-x-lg};
+}
+
+.dropdown-menu-lg .dropdown-item,
+.dropdown-menu-xl .dropdown-header {
+  margin-left: calc(var(--#{$prefix}dropdown-padding-x) * -1);
+  margin-right: calc(var(--#{$prefix}dropdown-padding-x) * -1);
+}
+
+
+// Positioning
+
+.dropend > .dropdown-menu {
+  top: calc(#{$dropdown-padding-y} * -1);
+}

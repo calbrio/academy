@@ -1,0 +1,18 @@
+//
+// user.scss
+// Use this to write your custom SCSS
+//
+
+.dz-no-hover {
+  cursor: auto;
+
+  &:hover {
+    border-color: var(--bs-dropzone-border-color);
+    color: var(--bs-secondary-color);
+  }
+}
+
+.brand-img {
+  max-height: 4.5rem;
+  width: auto;
+}

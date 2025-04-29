@@ -1,0 +1,31 @@
+//
+// list.scss
+// Theme component
+//
+
+.list {
+  --#{$prefix}list-item-spacing-y: #{$list-item-spacing-y};
+  --#{$prefix}list-link-font-size: #{$list-link-font-size};
+  --#{$prefix}list-link-color: #{$list-link-color};
+  --#{$prefix}list-link-hover-color: #{$list-link-hover-color};
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list-item + .list-item {
+  margin-top: var(--#{$prefix}list-item-spacing-y);
+}
+
+.list-link {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  font-size: var(--#{$prefix}list-link-font-size);
+  color: var(--#{$prefix}list-link-color);
+
+  &:hover, &:focus {
+    text-decoration: none;
+    color: var(--#{$prefix}list-link-hover-color);
+  }
+}

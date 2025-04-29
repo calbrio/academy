@@ -1,0 +1,13 @@
+//
+// grid.scsss
+// Extended from Bootstrap
+//
+
+[class^="container"] {
+  position: relative;
+  z-index: 1;
+}
+
+[class^="col"] {
+  position: relative;
+}

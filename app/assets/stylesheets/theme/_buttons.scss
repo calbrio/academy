@@ -1,0 +1,109 @@
+//
+// buttons.scss
+// Extended from Bootstrap
+//
+
+.btn > img {
+  max-height: 1em;
+  width: auto;
+}
+
+.btn:not([class*="btn-outline"]) {
+  border-color: transparent !important;
+}
+
+
+// Sizing
+
+.btn-xs {
+  --#{$prefix}btn-padding-y: #{$input-btn-padding-y-xs};
+  --#{$prefix}btn-padding-x: #{$input-btn-padding-x-xs};
+  --#{$prefix}btn-font-size: #{$input-btn-font-size-xs};
+}
+
+
+// Custom colors
+
+.btn-white {
+  --#{$prefix}btn-bg: var(--#{$prefix}white);
+  --#{$prefix}btn-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}white);
+  --#{$prefix}btn-hover-color: #{darken($primary, 5%)};
+  --#{$prefix}btn-focus-bg: var(--#{$prefix}white);
+  --#{$prefix}btn-focus-color: #{darken($primary, 5%)};
+  --#{$prefix}btn-active-bg: #{darken($white, 5%)};
+  --#{$prefix}btn-active-color: #{darken($primary, 5%)};
+}
+
+.btn-group .btn-white {
+  --#{$prefix}btn-border-color: var(--#{$prefix}gray-300);
+  --#{$prefix}btn-color: var(--#{$prefix}secondary-color);
+  --#{$prefix}btn-active-border-color:  var(--#{$prefix}gray-300);
+  --#{$prefix}btn-active-color: var(--#{$prefix}body-color);
+  border-color: var(--#{$prefix}btn-border-color) !important;
+}
+
+.btn-outline-white {
+  --#{$prefix}btn-border-color: var(--#{$prefix}gray-300);
+  --#{$prefix}btn-color: var(--#{$prefix}body-color);
+  --#{$prefix}btn-hover-bg: #{darken($white, 5%)};
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}gray-400);
+  --#{$prefix}btn-hover-color: var(--#{$prefix}body-color);
+  --#{$prefix}btn-active-bg: #{darken($white, 5%)};
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}gray-400);
+  --#{$prefix}btn-active-color: var(--#{$prefix}body-color);
+  --#{$prefix}btn-disabled-border-color: var(--#{$prefix}gray-300);
+  --#{$prefix}btn-disabled-color: var(--#{$prefix}body-color);
+}
+
+.btn-outline-gray-300 {
+  --#{$prefix}btn-border-color: var(--#{$prefix}gray-300);
+  --#{$prefix}btn-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}primary);
+  --#{$prefix}btn-hover-border-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-hover-color: var(--#{$prefix}white);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}primary);
+  --#{$prefix}btn-active-border-color: var(--#{$prefix}primary);
+  --#{$prefix}btn-active-color: var(--#{$prefix}white);
+}
+
+
+// Subtle variants
+
+.btn[class*="-subtle"] {
+  --#{$prefix}btn-subtle-bg-opacity: #{$btn-subtle-bg-opacity};
+}
+
+@each $color, $value in $theme-colors {
+  .btn-#{$color}-subtle {
+    --#{$prefix}btn-bg: RGBA(var(--#{$prefix}#{$color}-rgb), var(--#{$prefix}btn-subtle-bg-opacity));
+    --#{$prefix}btn-color: var(--#{$prefix}#{$color});
+    --#{$prefix}btn-hover-bg: RGBA(var(--#{$prefix}#{$color}-rgb), calc(var(--#{$prefix}btn-subtle-bg-opacity) * 1.5));
+    --#{$prefix}btn-hover-color: var(--#{$prefix}#{$color});
+    --#{$prefix}btn-active-bg: RGBA(var(--#{$prefix}#{$color}-rgb), calc(var(--#{$prefix}btn-subtle-bg-opacity) * 1.5));
+    --#{$prefix}btn-active-color: var(--#{$prefix}#{$color});
+    --#{$prefix}btn-disabled-bg: RGBA(var(--#{$prefix}#{$color}-rgb), calc(var(--#{$prefix}btn-subtle-bg-opacity) * 1));
+    --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color});
+  }
+}
+
+
+// Pill
+
+.btn-pill {
+  --#{$prefix}btn-border-radius: var(--#{$prefix}border-radius-pill);
+}
+
+
+// Rounded circle
+
+.btn-rounded-circle {
+  --#{$prefix}btn-padding-x: var(--#{$prefix}btn-padding-y);
+  --#{$prefix}btn-border-radius: var(--#{$prefix}border-radius-pill);
+
+  & > * {
+    display: block;
+    line-height: 1 !important;
+    width: 1em;
+  }
+}

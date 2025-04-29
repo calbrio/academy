@@ -1,0 +1,39 @@
+//
+// breadcrumb.scss
+// Extended from Bootstrap
+//
+
+.breadcrumb {
+  --#{$prefix}breadcrumb-font-size: #{$breadcrumb-font-size};
+}
+
+.breadcrumb-item {
+  font-size: var(--#{$prefix}breadcrumb-font-size);
+
+  + .breadcrumb-item {
+
+    &::before {
+      content: "\e930";
+      font-family: "Feather";
+    }
+  }
+}
+
+
+// Horizontal scroll
+
+.breadcrumb-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: auto;
+
+  .breadcrumb-item {
+    white-space: nowrap;
+  }
+
+  // Hide scrollbar
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,55 @@
+//
+// icon.scss
+// Theme component
+//
+
+.icon {
+  --#{$prefix}icon-size: #{$icon-size-base};
+}
+
+.icon > svg {
+  width: var(--#{$prefix}icon-size);
+  height: var(--#{$prefix}icon-size);
+}
+
+// Use "text-" utilities to fill svg icons
+.icon[class*="text-"] > svg [fill]:not([fill="none"]) {
+  fill: currentColor !important;
+}
+
+
+// Sizing
+
+.icon-xs {
+  --#{$prefix}icon-size: #{$icon-size-xs};
+}
+
+.icon-sm {
+  --#{$prefix}icon-size: #{$icon-size-sm};
+}
+
+.icon-lg {
+  --#{$prefix}icon-size: #{$icon-size-lg};
+}
+
+.icon-xl {
+  --#{$prefix}icon-size: #{$icon-size-xl};
+}
+
+
+// Circle
+
+.icon-circle {
+  --#{$prefix}icon-circle-size: #{$icon-circle-size};
+  --#{$prefix}icon-circle-font-size: #{$icon-circle-font-size};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--#{$prefix}icon-circle-size);
+  height: var(--#{$prefix}icon-circle-size);
+  border-radius: 50%;
+
+  > .fe {
+    font-size: var(--#{$prefix}icon-circle-font-size);
+  }
+}

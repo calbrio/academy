@@ -1,0 +1,22 @@
+//
+// pagination.scss
+// Extended from Bootstrap
+//
+
+.pagination-sm {
+  --#{$prefix}pagination-border-radius: #{$btn-border-radius-sm};
+  --#{$prefix}pagination-font-size: #{$btn-font-size-sm};
+}
+
+.pagination-sm .page-link {
+  line-height: $btn-line-height-sm;
+}
+
+.pagination-lg {
+  --#{$prefix}pagination-border-radius: #{$btn-border-radius-lg};
+  --#{$prefix}pagination-font-size: #{$btn-font-size-lg};
+}
+
+.pagination-lg .page-link {
+  line-height: $btn-line-height-lg;
+}
