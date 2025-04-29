@@ -1,0 +1,33 @@
+<%= form_with(model: [@course, lesson], local: true) do |form| %>
+  <% if lesson.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(lesson.errors.count, "error") %> prohibited this lesson from being saved:</h4>
+      <ul>
+        <% lesson.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group mb-3">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 5, class: 'form-control' %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :position %>
+    <%= form.number_field :position, class: 'form-control' %>
+    <small class="form-text text-muted">Position determines the order of lessons in the course.</small>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', course_path(@course), class: 'btn btn-secondary' %>
+  </div>
+<% end %>

@@ -1,0 +1,30 @@
+<h1>Courses</h1>
+
+<div class="courses">
+  <% if @courses.any? %>
+    <div class="row">
+      <% @courses.each do |course| %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title"><%= course.title %></h5>
+              <p class="card-text"><%= truncate(course.description, length: 100) %></p>
+              <div class="d-flex justify-content-between">
+                <%= link_to 'View Course', course_path(course), class: 'btn btn-primary' %>
+                <small class="text-muted"><%= pluralize(course.lessons.count, 'lesson') %></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No courses available yet.</p>
+  <% end %>
+</div>
+
+<% if user_signed_in? && current_user.admin? %>
+  <div class="mt-4">
+    <%= link_to 'New Course', new_course_path, class: 'btn btn-success' %>
+  </div>
+<% end %>
