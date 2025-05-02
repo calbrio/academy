@@ -1,26 +1,46 @@
-<h2>Log in</h2>
+<section class="section-border border-primary">
+  <div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center gx-0 min-vh-100">
+      <div class="col-12 col-md-5 col-lg-4 py-8 py-md-11">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+        <!-- Heading -->
+        <h1 class="mb-0 fw-bold text-center">
+          Sign in
+        </h1>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+        <!-- Text -->
+        <p class="mb-6 text-center text-body-secondary">
+          Simplify your workflow in minutes.
+        </p>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
+        <!-- Form -->
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mb-6" }) do |f| %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+          <!-- Email -->
+          <div class="form-group">
+            <%= f.label :email, class: "form-label" %>
+            <%= f.email_field :email, class: "form-control", placeholder: "name@address.com", autofocus: true, autocomplete: "email" %>
+          </div>
 
-<%= render "users/shared/links" %>
+          <!-- Password -->
+          <div class="form-group mb-5">
+            <%= f.label :password, class: "form-label" %>
+            <%= f.password_field :password, class: "form-control", placeholder: "Enter your password", autocomplete: "current-password" %>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-group">
+            <%= f.submit "Sign in", class: "btn w-100 btn-primary" %>
+          </div>
+
+        <% end %>
+
+        <!-- Text -->
+        <p class="mb-0 fs-sm text-center text-body-secondary">
+          Don't have an account yet <%= link_to "Sign up", new_user_registration_path %>.
+        </p>
+
+      </div>
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+</section>

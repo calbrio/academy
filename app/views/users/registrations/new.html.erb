@@ -1,29 +1,47 @@
-<h2>Sign up</h2>
+<section class="section-border border-primary">
+  <div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center gx-0 min-vh-100">
+      <div class="col-12 col-md-5 col-lg-4 py-8 py-md-11">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+        <!-- Heading -->
+        <h1 class="mb-0 fw-bold text-center">
+          Sign up
+        </h1>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+        <!-- Text -->
+        <p class="mb-6 text-center text-body-secondary">
+          Simplify your workflow in minutes.
+        </p>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+        <!-- Form -->
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <!-- Email -->
+          <div class="form-group">
+            <%= f.label :email, class: "form-label" %>
+            <%= f.email_field :email, class: "form-control", placeholder: "name@address.com", autofocus: true, autocomplete: "email" %>
+          </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+          <!-- Password -->
+          <div class="form-group mb-5">
+            <%= f.label :password, class: "form-label" %>
+            <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %>
+            <%= f.password_field :password, class: "form-control", placeholder: "Enter your password", autocomplete: "new-password" %>
+          </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+          <!-- Submit -->
+          <div class="form-group">
+            <%= f.submit "Sign up", class: "btn w-100 btn-primary" %>
+          </div>
+        <% end %>
 
-<%= render "users/shared/links" %>
+        <!-- Text -->
+        <p class="mb-0 fs-sm text-center text-body-secondary">
+          Already have an account? <%= link_to "Log in", new_session_path(resource_name) %>.
+        </p>
+
+      </div>
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+</section>

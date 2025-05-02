@@ -1,29 +1,58 @@
-<div class="lesson-header mb-4">
-  <div class="d-flex justify-content-between align-items-start">
-    <div>
-      <h1><%= @lesson.title %></h1>
-      <div class="text-muted">
-        Lesson <%= @lesson.position %> in <%= link_to @course.title, course_path(@course) %>
+<%= render 'shared/navbar' %>
+
+<nav class="bg-gray-200">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb breadcrumb-scroll">
+          <li class="breadcrumb-item">
+            <%= link_to 'Courses', courses_path, class: 'text-gray-700' %>
+          </li>
+          <li class="breadcrumb-item">
+            <%= link_to @course.title, course_path(@course), class: 'text-gray-700' %>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= @lesson.title %>
+          </li>
+        </ol>
+
       </div>
-    </div>
-    
-    <% if user_signed_in? && current_user.enrolled_in?(@course) %>
-      <% status = @lesson.completion_status_for(current_user) %>
-      <div class="card border-<%= status == 'completed' ? 'success' : (status == 'in_progress' ? 'warning' : 'info') %> mb-3">
-        <div class="card-body text-center">
-          <h5 class="card-title">Your Progress</h5>
-          <p class="card-text">
-            <% case status %>
-            <% when 'completed' %>
-              <span class="badge bg-success">Completed</span>
-            <% when 'in_progress' %>
-              <span class="badge bg-warning">In Progress</span>
-            <% else %>
-              <span class="badge bg-info">Not Started</span>
-              <% current_user.start_lesson!(@lesson) %>
-            <% end %>
-          </p>
-          
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+</nav>
+
+<section class="pt-8 pt-md-11">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12 col-md">
+        <% if user_signed_in? && current_user.enrolled_in?(@course) %>
+          <% status = @lesson.completion_status_for(current_user) %>
+          <% case status %>
+          <% when 'completed' %>
+            <span class="badge bg-success mb-2">Completed</span>
+          <% when 'in_progress' %>
+            <span class="badge bg-warning mb-2">In Progress</span>
+          <% else %>
+            <span class="badge bg-info mb-2">Not Started</span>
+            <% current_user.start_lesson!(@lesson) %>
+          <% end %>
+        <% end %>
+        <!-- Heading -->
+        <h1 class="display-4 mb-2">
+          <%= @lesson.title %>
+        </h1>
+
+        <!-- Text -->
+        <p class="fs-lg text-gray-700 mb-5 mb-md-0">
+          Lesson <%= @lesson.position %> in <%= link_to @course.title, course_path(@course) %>
+        </p>
+      </div>
+
+      <div class="col-auto">
+        <% if user_signed_in? && current_user.enrolled_in?(@course) %>
+          <% status = @lesson.completion_status_for(current_user) %>
           <% unless status == 'completed' %>
             <%= button_to lesson_lesson_completions_path(@lesson, status: 'completed'), 
                           method: :post, 
@@ -31,51 +60,48 @@
               <i class="bi bi-check-circle"></i> Mark as Complete
             <% end %>
           <% end %>
-        </div>
+        <% end %>
       </div>
-    <% elsif !user_signed_in? %>
-      <div class="alert alert-info">
-        Sign in to track your progress on this lesson.
-      </div>
-    <% elsif !current_user.enrolled_in?(@course) %>
-      <div class="alert alert-warning">
-        You need to enroll in this course to track your progress.
-        <%= button_to "Enroll Now", course_course_enrollments_path(@course), method: :post, class: "btn btn-success mt-2" %>
-      </div>
-    <% end %>
-  </div>
-</div>
+    </div> <!-- / .row -->
+    <div class="row">
+      <div class="col-12">
 
-<div class="lesson-description mb-4">
-  <h3>Description</h3>
-  <div class="card">
-    <div class="card-body">
-      <%= simple_format(@lesson.description) %>
+        <!-- Divider -->
+        <hr class="my-6 my-md-8 border-gray-300">
+
+      </div>
+    </div> <!-- / .row -->
+    <div class="row">
+      <div class="col-12">
+        <%= @lesson.render_markdown %>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="lesson-navigation mb-4">
-  <div class="d-flex justify-content-between">
-    <% prev_lesson = @course.lessons.where("position < ?", @lesson.position).order(position: :desc).first %>
-    <% next_lesson = @course.lessons.where("position > ?", @lesson.position).order(position: :asc).first %>
-    
-    <% if prev_lesson %>
-      <%= link_to "← Previous: #{prev_lesson.title}", course_lesson_path(@course, prev_lesson), class: 'btn btn-outline-primary' %>
-    <% else %>
-      <span></span>
-    <% end %>
-    
-    <% if next_lesson %>
-      <%= link_to "Next: #{next_lesson.title} →", course_lesson_path(@course, next_lesson), class: 'btn btn-outline-primary' %>
-    <% else %>
-      <span></span>
+    <div class="row justify-content-between my-6 my-md-8">
+      <% prev_lesson = @course.lessons.where("position < ?", @lesson.position).order(position: :asc).last %>
+      <% next_lesson = @course.lessons.where("position > ?", @lesson.position).order(position: :asc).first %>
+      <div class="col-auto">
+        <% if prev_lesson %>
+          <%= link_to "← Previous: #{prev_lesson.title}", course_lesson_path(@course, prev_lesson), class: 'btn btn-outline-primary' %>
+        <% else %>
+          <span></span>
+        <% end %>
+      </div>
+      <div class="col-auto">  
+
+        <% if next_lesson %>
+          <%= link_to "Next: #{next_lesson.title} →", course_lesson_path(@course, next_lesson), class: 'btn btn-primary ms-2' %>
+        <% else %>
+           <span></span>
+        <% end %>
+      </div>
+    </div>
+
+    <% if user_signed_in? && current_user.admin? %>
+      <div class="lesson-actions">
+        <%= link_to 'Edit Lesson', edit_course_lesson_path(@course, @lesson), class: 'btn btn-warning' %>
+        <%= button_to 'Delete Lesson', course_lesson_path(@course, @lesson), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      </div>
     <% end %>
   </div>
-</div>
-
-<div class="lesson-actions">
-  <%= link_to 'Edit Lesson', edit_course_lesson_path(@course, @lesson), class: 'btn btn-warning' %>
-  <%= link_to 'Back to Course', course_path(@course), class: 'btn btn-secondary' %>
-  <%= button_to 'Delete Lesson', course_lesson_path(@course, @lesson), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 </div>

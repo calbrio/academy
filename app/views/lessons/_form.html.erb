@@ -16,8 +16,9 @@
   </div>
 
   <div class="form-group mb-3">
-    <%= form.label :description %>
-    <%= form.text_area :description, rows: 5, class: 'form-control' %>
+    <%= form.label :lesson_content %>
+    <%= form.text_area :lesson_content, rows: 20, class: 'form-control', data: { controller: 'simplemde' } %>
+    <small class="form-text text-muted">Use markdown to format your content (e.g., # headers, * lists, ``` code blocks)</small>
   </div>
 
   <div class="form-group mb-3">

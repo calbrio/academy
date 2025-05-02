@@ -51,8 +51,11 @@ class User < ApplicationRecord
   def start_lesson!(lesson)
     return if started_lesson?(lesson)
     
-    # Ensure user is enrolled in the course
-    enroll_in!(lesson.course) unless enrolled_in?(lesson.course)
+    # Automatically enroll in the course if not already enrolled
+    unless enrolled_in?(lesson.course)
+      course_enrollment = course_enrollments.create(course: lesson.course)
+      course_enrollment.start! # Mark course as in_progress
+    end
     
     # Create or update lesson completion record
     completion = lesson_completions.find_or_initialize_by(lesson: lesson)

@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg bg-white">
+  <div class="container">
+    <!-- Brand -->
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag asset_path("calbrio.svg"), class: "navbar-brand-img", alt: "..." %>
+    <% end %>
+
+      <!-- Buttons -->
+      <div class="navbar-buttons">
+        <% if user_signed_in? %>
+          <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-login", form: { data: { turbo: false } } %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path, class: "btn btn-login" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-signup btn-sm btn-primary lift ms-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>

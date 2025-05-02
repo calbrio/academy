@@ -1,128 +1,180 @@
-<div class="course-header mb-4">
-  <div class="d-flex justify-content-between align-items-start">
-    <div>
-      <h1><%= @course.title %></h1>
-      <div class="text-muted">
-        Created: <%= @course.created_at.strftime("%B %d, %Y") %>
-        <% if @course.updated_at != @course.created_at %>
-          | Updated: <%= @course.updated_at.strftime("%B %d, %Y") %>
-        <% end %>
+<%= render 'shared/navbar' %>
+
+<nav class="bg-gray-200">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb breadcrumb-scroll">
+          <li class="breadcrumb-item">
+            <%= link_to 'Courses', courses_path, class: 'text-gray-700' %>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= @course.title %>
+          </li>
+        </ol>
+
       </div>
-    </div>
-    
-    <% if user_signed_in? %>
-      <% if current_user.enrolled_in?(@course) %>
-        <div class="card border-success mb-3">
-          <div class="card-body text-center">
-            <h5 class="card-title">Your Progress</h5>
-            <div class="progress mb-2" style="height: 20px;">
-              <% progress = @course.completion_percentage_for(current_user) %>
-              <div class="progress-bar bg-success" role="progressbar" style="width: <%= progress %>%;" 
-                   aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100">
-                <%= progress %>%
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+</nav>
+
+<section class="pt-8 pt-md-11">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12 col-md">
+            <!-- Heading -->
+            <h1 class="display-4 mb-2">
+              <%= @course.title %>
+            </h1>
+
+            <!-- Text -->
+            <p class="fs-lg text-gray-700 mb-5 mb-md-0">
+              <%= @course.description %>
+            </p>
+
+          </div>
+        </div> <!-- / .row -->
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Divider -->
+            <hr class="my-6 my-md-8 border-gray-300">
+
+          </div>
+        </div> <!-- / .row -->
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Card -->
+            <div class="card shadow-light-lg mb-5">
+              <div class="card-body">
+                <% if user_signed_in? %>
+                  <% if current_user.enrolled_in?(@course) %>
+                    <h4 class="fw-bold mb-4">
+                      Progress
+                    </h4>
+                    <div class="progress mb-2" style="height: 20px;">
+                      <% progress = @course.completion_percentage_for(current_user) %>
+                      <div class="progress-bar bg-success" role="progressbar" style="width: <%= progress %>%;" 
+                          aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100">
+                            <%= progress %>%
+                          </div>
+                        </div>
+                  <% end %>
+                <% else %>
+                  <h4>
+                    Get started for free
+                  </h4>
+                  <p class="fs-sm text-gray-800 mb-5">
+                    On-demand courses provide expert-created content, real-world case studies, study materials, and the flexibility to learn at your own pace.
+                  </p>
+                  <%= button_to "Enroll in Course", course_course_enrollments_path(@course), method: :post, class: "btn btn-primary btn-small" %>
+                <% end %>
               </div>
             </div>
-            <p class="card-text">
-              <% if progress == 100 %>
-                <span class="badge bg-success">Completed</span>
-              <% elsif progress > 0 %>
-                <span class="badge bg-warning">In Progress</span>
-              <% else %>
-                <span class="badge bg-info">Just Started</span>
-              <% end %>
-            </p>
           </div>
-        </div>
-      <% else %>
-        <%= button_to "Enroll in Course", course_course_enrollments_path(@course), method: :post, class: "btn btn-success btn-lg" %>
-      <% end %>
-    <% end %>
-  </div>
-</div>
 
-<div class="course-description mb-4">
-  <h3>Description</h3>
-  <div class="card">
-    <div class="card-body">
-      <%= simple_format(@course.description) %>
-    </div>
-  </div>
-</div>
+          <div class="col-12">
 
-<div class="lessons mb-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Lessons</h3>
-    <% if user_signed_in? && current_user.admin? %>
-      <%= link_to 'Add Lesson', new_course_lesson_path(@course), class: 'btn btn-sm btn-success' %>
-    <% end %>
-  </div>
-  
-  <% if @course.lessons.any? %>
-    <div class="list-group">
-      <% @course.lessons.each do |lesson| %>
-        <% if user_signed_in? %>
-          <% status = lesson.completion_status_for(current_user) %>
-          <% status_class = {
-               'completed' => 'list-group-item-success',
-               'in_progress' => 'list-group-item-warning',
-               'not_started' => ''
-             }[status] %>
-        <% else %>
-          <% status = 'not_started' %>
-          <% status_class = '' %>
-        <% end %>
-        
-        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <%= status_class %>">
-          <div>
-            <strong><%= lesson.position %>. <%= lesson.title %></strong>
-            <% if lesson.description.present? %>
-              <p class="mb-0 text-muted"><%= truncate(lesson.description, length: 100) %></p>
-            <% end %>
-            
-            <% if user_signed_in? %>
-              <div class="mt-1">
-                <% case status %>
-                <% when 'completed' %>
-                  <span class="badge bg-success">Completed</span>
-                <% when 'in_progress' %>
-                  <span class="badge bg-warning">In Progress</span>
-                <% else %>
-                  <% if current_user.enrolled_in?(@course) %>
-                    <span class="badge bg-light text-dark">Not Started</span>
-                  <% end %>
-                <% end %>
+            <div class="accordion shadow-light-lg mb-6 mb-md-8" id="helpAccordionOne">
+              <div class="accordion-item">
+
+                <!-- Button -->
+                <div class="accordion-button" role="button">
+                  <div class="me-auto">
+
+                    <!-- Heading -->
+                    <h4 class="fw-bold mb-0">
+                      Lessons
+                    </h4>
+
+                  </div>
+
+                  <!-- Badge -->
+                  <span class="badge rounded-pill text-bg-success-subtle ms-4">
+                    <span class="h6 text-uppercase">
+                      <%= @course.lessons.count %> Lessons
+                    </span>
+                  </span>
+
+                </div>
+
               </div>
-            <% end %>
-          </div>
-          
-          <div class="d-flex">
-            <% if user_signed_in? && current_user.enrolled_in?(@course) %>
-              <% unless status == 'completed' %>
-                <%= button_to lesson_lesson_completions_path(lesson, status: 'completed'), 
-                              method: :post, 
-                              class: 'btn btn-sm btn-success me-2' do %>
-                  <i class="bi bi-check-circle"></i> Mark Complete
-                <% end %>
-              <% end %>
-            <% end %>
-            
-            <%= link_to 'View', course_lesson_path(@course, lesson), class: 'btn btn-sm btn-primary me-1' %>
-            <% if user_signed_in? && current_user.admin? %>
-              <%= link_to 'Edit', edit_course_lesson_path(@course, lesson), class: 'btn btn-sm btn-secondary' %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p>No lessons have been added to this course yet.</p>
-  <% end %>
-</div>
+              <% if @course.lessons.any? %>
+                <% @course.lessons.each do |lesson| %>
+                        <% status_class = user_signed_in? ? { 'completed' => 'list-group-item-success', 'in_progress' => 'list-group-item-warning' }[lesson.completion_status_for(current_user)] : '' %>
 
-<div class="course-actions">
-  <% if user_signed_in? && current_user.admin? %>
-    <%= link_to 'Edit Course', edit_course_path(@course), class: 'btn btn-warning' %>
-    <%= button_to 'Delete Course', course_path(@course), method: :delete, data: { confirm: 'Are you sure? This will delete all lessons in this course.' }, class: 'btn btn-danger' %>
-  <% end %>
-  <%= link_to 'Back to Courses', courses_path, class: 'btn btn-secondary' %>
-</div>
+                  <div class="accordion-item">
+
+                    <!-- Button -->
+                    <div class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-target="#lesson-<%= lesson.id %>" aria-expanded="false" aria-controls="lesson-<%= lesson.id %>">
+
+                      <!-- Title -->
+                      <%= link_to course_lesson_path(@course, lesson), class: 'text-decoration-none text-body' do %>
+                        <span class="me-4" id="lesson-<%= lesson.id %>Heading">
+                          <%= lesson.position %>. <%= lesson.title %>
+                        </span>
+                      <% end %>
+
+                      <!-- Metadata -->
+                      <div class="text-body-secondary ms-auto">
+
+                        <!-- Text -->
+                        <% if user_signed_in? %>
+                          <div class="mt-1">
+                            <% case lesson.completion_status_for(current_user) %>
+                            <% when 'completed' %>
+                              <span class="badge bg-success">Completed</span>
+                            <% when 'in_progress' %>
+                              <span class="badge bg-warning">In Progress</span>
+                            <% else %>
+                              <% if current_user.enrolled_in?(@course) %>
+                                <span class="badge bg-light text-dark">Not Started</span>
+                              <% end %>
+                            <% end %>
+                          </div>
+                        <% end %>
+
+                      </div>
+
+                    </div>
+
+                    <!-- Collapse -->
+                    <div class="accordion-collapse collapse" id="lesson-<%= lesson.id %>" aria-labelledby="lesson-<%= lesson.id %>Heading" data-bs-parent="#lessonAccordionOne" style="">
+                      <div class="accordion-body">
+
+                        <!-- Text -->
+                        <p class="text-gray-700">
+                          <%= lesson.description %>
+                        </p>
+
+                        <div class="d-flex">
+                          <% if user_signed_in? && current_user.admin? %>
+                            <%= link_to 'Edit', edit_course_lesson_path(@course, lesson), class: 'btn btn-sm btn-secondary' %>
+                          <% end %>
+                        </div>  
+
+                      </div>
+                    </div>
+
+                  </div>
+                <% end %>
+              <% else %>
+                 <p>No lessons have been added to this course yet.</p>
+              <% end %>
+            </div>
+
+            <div class="course-actions">
+              <% if user_signed_in? && current_user.admin? %>
+                <%= link_to 'Add Lesson', new_course_lesson_path(@course), class: 'btn btn-sm btn-success' %>
+                <%= link_to 'Edit Course', edit_course_path(@course), class: 'btn btn-warning' %>
+                <%= button_to 'Delete Course', course_path(@course), method: :delete, data: { confirm: 'Are you sure? This will delete all lessons in this course.' }, class: 'btn btn-danger' %>
+              <% end %>
+            </div>
+
+          </div>
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
+    </section>

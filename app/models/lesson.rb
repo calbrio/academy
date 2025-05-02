@@ -9,6 +9,24 @@ class Lesson < ApplicationRecord
   
   default_scope { order(position: :asc) }
   
+  # Markdown content handling
+  def render_markdown
+    return '' unless lesson_content
+    
+    renderer = Redcarpet::Render::HTML.new(
+      filter_html: true,
+      hard_wrap: true,
+      link_attributes: { rel: 'nofollow', target: '_blank' }
+    )
+    
+    markdown = Redcarpet::Markdown.new(renderer, fenced_code_blocks: true)
+    markdown.render(lesson_content).html_safe
+  end
+  
+  def has_markdown_content?
+    lesson_content.present?
+  end
+  
   # Methods for tracking completion
   def completion_status_for(user)
     return 'not_started' unless user

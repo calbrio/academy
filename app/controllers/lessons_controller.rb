@@ -1,7 +1,7 @@
 class LessonsController < ApplicationController
   before_action :set_course
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:index]
   before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
 
   def index
@@ -9,6 +9,14 @@ class LessonsController < ApplicationController
   end
 
   def show
+    # Mark the lesson as started and ensure course enrollment is tracked
+    if current_user
+      current_user.start_lesson!(@lesson) unless current_user.started_lesson?(@lesson)
+      
+      # Update course progress
+      course_enrollment = current_user.course_enrollments.find_by(course: @course)
+      course_enrollment.update_progress! if course_enrollment
+    end
   end
 
   def new
@@ -52,7 +60,7 @@ class LessonsController < ApplicationController
   end
 
   def lesson_params
-    params.require(:lesson).permit(:title, :description, :position)
+    params.require(:lesson).permit(:title, :description, :position, :lesson_content)
   end
   
   def require_admin
