@@ -48,4 +48,7 @@ if [ "$KAMAL_VERSION" != "$remote_head" ]; then
   exit 1
 fi
 
+echo "Refreshing sitemap..."
+RAILS_MASTER_KEY="$(cat config/master.key)" bin/rails sitemap:refresh
+
 exit 0
