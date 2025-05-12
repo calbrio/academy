@@ -1,46 +1,53 @@
+<% content_for :title do %>
+  Sign In | Calbrio Academy
+<% end %>
+
 <section class="section-border border-primary">
   <div class="container d-flex flex-column">
     <div class="row align-items-center justify-content-center gx-0 min-vh-100">
       <div class="col-12 col-md-5 col-lg-4 py-8 py-md-11">
-
         <!-- Heading -->
         <h1 class="mb-0 fw-bold text-center">
           Sign in
         </h1>
-
         <!-- Text -->
         <p class="mb-6 text-center text-body-secondary">
-          Simplify your workflow in minutes.
+          Get back to learning
         </p>
-
         <!-- Form -->
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mb-6" }) do |f| %>
-
           <!-- Email -->
           <div class="form-group">
             <%= f.label :email, class: "form-label" %>
-            <%= f.email_field :email, class: "form-control", placeholder: "name@address.com", autofocus: true, autocomplete: "email" %>
+            <%= f.email_field :email,
+                          class: "form-control",
+                          placeholder: "name@address.com",
+                          autofocus: true,
+                          autocomplete: "email" %>
           </div>
-
           <!-- Password -->
           <div class="form-group mb-5">
             <%= f.label :password, class: "form-label" %>
-            <%= f.password_field :password, class: "form-control", placeholder: "Enter your password", autocomplete: "current-password" %>
+            <%= f.password_field :password,
+                             class: "form-control",
+                             placeholder: "Enter your password",
+                             autocomplete: "current-password" %>
           </div>
-
           <!-- Submit -->
           <div class="form-group">
             <%= f.submit "Sign in", class: "btn w-100 btn-primary" %>
           </div>
 
         <% end %>
-
         <!-- Text -->
         <p class="mb-0 fs-sm text-center text-body-secondary">
-          Don't have an account yet <%= link_to "Sign up", new_user_registration_path %>.
+          Don't have an account yet
+          <%= link_to "Sign up", new_user_registration_path %>.
         </p>
 
       </div>
-    </div> <!-- / .row -->
-  </div> <!-- / .container -->
+    </div>
+    <!-- / .row -->
+  </div>
+  <!-- / .container -->
 </section>

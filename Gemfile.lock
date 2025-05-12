@@ -306,6 +306,8 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     simplemde (0.1.0)
+    sitemap_generator (6.3.0)
+      builder (~> 3.0)
     solid_cable (3.0.7)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -402,6 +404,7 @@ DEPENDENCIES
   rubocop-rails-omakase
   selenium-webdriver
   simplemde
+  sitemap_generator (~> 6.3)
   solid_cable
   solid_cache
   solid_queue

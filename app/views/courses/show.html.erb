@@ -1,3 +1,11 @@
+<% content_for :title do %>
+  <%= @course.title %> | Calbrio Academy
+<% end %>
+
+<% content_for :description do %>
+  <%= truncate(@course.description, length: 155) %>
+<% end %>
+
 <%= render 'shared/navbar' %>
 
 <nav class="bg-gray-200">
